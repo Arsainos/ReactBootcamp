@@ -45,6 +45,21 @@ class App extends Component {
     this.setState({showPersons: !doesShow});
   };
   render(){
+    let persons = null;
+
+    if(this.state.showPersons){
+      persons = (<div>
+        <Person 
+          name={this.state.persons[0].name} 
+          age={this.state.persons[0].age}
+          click={this.switchNameHandler.bind(this, 'Rita')}
+          changed={this.nameChangedHandler}
+        />
+        <Person name="Manu" age="29">My hobbies: guitar</Person>
+        <Person />
+      </div>)
+    }
+
     return (
       <div className="App">
         <h1>Hello world</h1>
@@ -52,20 +67,7 @@ class App extends Component {
         <button 
         style={this.style}
         onClick={this.tooglePersonHandler}>Switch Name </button>
-        { 
-          this.state.showPersons ? 
-            <div >
-              <Person 
-                name={this.state.persons[0].name} 
-                age={this.state.persons[0].age}
-                click={this.switchNameHandler.bind(this, 'Rita')}
-                changed={this.nameChangedHandler}
-              />
-              <Person name="Manu" age="29">My hobbies: guitar</Person>
-              <Person />
-            </div>
-          : null
-        }
+        {persons}
       </div>
     )
   }
