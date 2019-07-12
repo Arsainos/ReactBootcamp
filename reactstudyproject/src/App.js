@@ -12,32 +12,37 @@ class App extends Component {
 
   state = {
       persons: [
-        { name: 'Max', age: 28},
-        { name: 'Manu', age: 29}
+        { id:'qweq' , name: 'Max', age: 28},
+        { id:'sfdsf' , name: 'Manu', age: 29}
       ],
       otherState: 'Azaza',
       showPersons: false
     };
 
-  nameChangedHandler = (event) => {
+  nameChangedHandler = (event , id) => {
     //console.log('Was clicked!');
     //DONT DO THIS WAY this.state.persons[0].name = 'Azazaelo';
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
+    });
+    
+    const person = {...this.state.persons[personIndex]};
+
+    person.name = event.target.value;
+
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
     this.setState({
-      persons: [
-      { name: event.target.value, age: 18},
-      { name: 'Manu', age: 29}
-    ]
+      persons: persons
     })
   };
 
-  switchNameHandler = (newName) => {
-    //console.log('Was clicked!');
-    //DONT DO THIS WAY this.state.persons[0].name = 'Azazaelo';
-    this.setState({
-      persons: [
-      { name: newName, age: 18},
-      { name: 'Manu', age: 29}
-    ]})
+  deletePersonHandler = (personIndex) => {
+    //const persons = this.state.persons.slice();
+    const persons = [...this.state.persons];
+    persons.splice(personIndex,1);
+    this.setState({persons:persons});
   };
 
   tooglePersonHandler = () => {
@@ -48,15 +53,17 @@ class App extends Component {
     let persons = null;
 
     if(this.state.showPersons){
-      persons = (<div>
-        <Person 
-          name={this.state.persons[0].name} 
-          age={this.state.persons[0].age}
-          click={this.switchNameHandler.bind(this, 'Rita')}
-          changed={this.nameChangedHandler}
-        />
-        <Person name="Manu" age="29">My hobbies: guitar</Person>
-        <Person />
+      persons = (
+      <div>
+        {this.state.persons.map((person, index) => {
+          return <Person 
+          click={() => this.deletePersonHandler(index)}
+          name={person.name} 
+          age={person.age}
+          key={person.id}
+          changed={(event) => this.nameChangedHandler(event, person.id)}
+          />
+        })}
       </div>)
     }
 
