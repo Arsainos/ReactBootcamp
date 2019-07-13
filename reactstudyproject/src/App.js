@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from './App.css';
 import Person from './Person/Person';
 
 class App extends Component {
   style = {
-    backgroundColor: 'white',
+    backgroundColor: 'green',
+    color: 'white',
     font: 'inherit',
     border: '1px solid blue',
-    padding: '8px'
+    padding: '8px',
+    cursor: 'pointer'
   }
 
   state = {
@@ -65,12 +67,23 @@ class App extends Component {
           />
         })}
       </div>)
+
+      this.style.backgroundColor = 'red';
+    }
+
+    const assignedClasses = [];
+
+    if(this.state.persons <= 2){
+      assignedClasses.push(classes.red);
+    }
+    if(this.state.persons <= 1){
+      assignedClasses.push(classes.bold);
     }
 
     return (
-      <div className="App">
-        <h1>Hello world</h1>
-        <p>Nice to meet you!</p>
+      <div className={classes.App}>
+        <h1>Hello world</h1> 
+        <p className={assignedClasses.join(' ')}>Nice to meet you!</p>
         <button 
         style={this.style}
         onClick={this.tooglePersonHandler}>Switch Name </button>
