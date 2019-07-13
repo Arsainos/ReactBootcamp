@@ -3,15 +3,6 @@ import classes from './App.css';
 import Person from './Person/Person';
 
 class App extends Component {
-  style = {
-    backgroundColor: 'green',
-    color: 'white',
-    font: 'inherit',
-    border: '1px solid blue',
-    padding: '8px',
-    cursor: 'pointer'
-  }
-
   state = {
       persons: [
         { id:'qweq' , name: 'Max', age: 28},
@@ -53,6 +44,7 @@ class App extends Component {
   };
   render(){
     let persons = null;
+    let btnClass = '';
 
     if(this.state.showPersons){
       persons = (
@@ -68,7 +60,7 @@ class App extends Component {
         })}
       </div>)
 
-      this.style.backgroundColor = 'red';
+      btnClass = classes.Red;
     }
 
     const assignedClasses = [];
@@ -85,7 +77,7 @@ class App extends Component {
         <h1>Hello world</h1> 
         <p className={assignedClasses.join(' ')}>Nice to meet you!</p>
         <button 
-        style={this.style}
+        className={btnClass}
         onClick={this.tooglePersonHandler}>Switch Name </button>
         {persons}
       </div>
