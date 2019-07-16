@@ -59,6 +59,7 @@ class App extends Component {
   };
   render(){
     console.log('[App.js] render');
+    console.log('started');
 
     let persons = null;
 
