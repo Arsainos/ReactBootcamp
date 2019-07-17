@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import classes from './Cockpit.css';
+import Auxiliary from '../../hoc/Auxiliary';
 
 const cockpit = (props) => {
     useEffect(() => {
@@ -25,13 +26,13 @@ const cockpit = (props) => {
     }
 
     return (
-        <div className={classes.Cockpit}>
+        <Auxiliary>
             <h1>Hello world</h1> 
             <p className={assignedClasses.join(' ')}>Nice to meet you!</p>
             <button 
             className={btnClass}
             onClick={props.clicked}>Switch Name </button>
-        </div>
+        </Auxiliary>
     )
 }
 
