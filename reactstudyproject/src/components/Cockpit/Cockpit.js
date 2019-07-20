@@ -7,7 +7,7 @@ const cockpit = (props) => {
     const toggleBtnRef = useRef(null);
     //toggleBtnRef.current.click();
 
-    const authContext = useContext(AuthContext);
+    const authContext = useContext(AuthContext); 
     
     useEffect(() => {
         console.log('[Cockpit.js] useEffect');
