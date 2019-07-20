@@ -1,13 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import classes from './Cockpit.css';
 import Auxiliary from '../../hoc/Auxiliary';
 
 const cockpit = (props) => {
+    const toggleBtnRef = useRef(null);
+    //toggleBtnRef.current.click();
+    
     useEffect(() => {
         console.log('[Cockpit.js] useEffect');
-        setTimeout(()=>{
-            alert('Punish you');
-        }, 1000);
+        // setTimeout(()=>{
+        //     alert('Punish you');
+        // }, 1000);
+        toggleBtnRef.current.click();
         return ()=>{console.log('[Cockpit.js] Cleaning work')}
     }, [props.persons]);
     
@@ -29,7 +33,8 @@ const cockpit = (props) => {
         <Auxiliary>
             <h1>Hello world</h1> 
             <p className={assignedClasses.join(' ')}>Nice to meet you!</p>
-            <button 
+            <button
+            ref={toggleBtnRef} 
             className={btnClass}
             onClick={props.clicked}>Switch Name </button>
         </Auxiliary>
