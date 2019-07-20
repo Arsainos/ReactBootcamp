@@ -18,7 +18,8 @@ class App extends Component {
       ],
       otherState: 'Azaza',
       showPersons: false,
-      changedCounter: 0
+      changedCounter: 0,
+      authenticated: false
     };
 
   static getDerivedStateFromProps(props, state) {
@@ -63,6 +64,11 @@ class App extends Component {
     const doesShow = this.state.showPersons;
     this.setState({showPersons: !doesShow});
   };
+
+ loginHandler = () => {
+   this.setState({authenticated: true})
+ };
+
   render(){
     console.log('[App.js] render');
     console.log('started');
@@ -88,6 +94,7 @@ class App extends Component {
           showPersons={this.state.showPersons} 
           persons={this.state.persons}
           clicked={this.tooglePersonHandler}
+          login={this.loginHandler}
         />
         {persons}
       </Auxiliary>
