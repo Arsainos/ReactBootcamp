@@ -1,15 +1,34 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Axuliary from '../../hoc/Axuliary';
 
 import classes from './Layout.css';
+import Toolbar from '../Navigation/Toolbar/Toolbar';
+import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
 
-const layout = (props) => (
-    <Axuliary>
-        <div>Toolbar, Sidebar, Backdrop</div>
-        <main className={classes.Content}>
-            {props.children}
-        </main>
-    </Axuliary>
-);
+class Layout extends Component {
+    state = {
+        showSideDrawer: true
+    }
+    
+    sideDrawerClosedHandler = () => {
+        this.setState({showSideDrawer: false});
+    }
+    
+    render(){
+        return(
+            <Axuliary>
+                <Toolbar />
+                <SideDrawer 
+                    open={this.state.showSideDrawer} 
+                    closed={this.sideDrawerClosedHandler}
+                />
+                <div>Sidebar, Backdrop</div>
+                <main className={classes.Content}>
+                    {this.props.children}
+                </main>
+            </Axuliary>
+        )
+    }
+};
 
-export default layout;
+export default Layout;
