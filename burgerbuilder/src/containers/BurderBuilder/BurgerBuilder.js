@@ -101,13 +101,13 @@ class BurgerBuilder extends Component {
 
     componentDidMount() {
         console.log(this.props);
-        axios.get('https://react-my-burger-6dfed.firebaseio.com/ingredients.json')
-        .then(response => {
-            this.setState({ingredients: response.data})
-        })
-        .catch(error=>{
-            console.log(error);
-        });
+        // axios.get('https://react-my-burger-6dfed.firebaseio.com/ingredients.json')
+        // .then(response => {
+        //     this.setState({ingredients: response.data})
+        // })
+        // .catch(error=>{
+        //     console.log(error);
+        // });
     }
     
     render(){
