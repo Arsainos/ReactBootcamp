@@ -59,3 +59,6 @@ typings/
 
 # next.js build output
 .next
+burgerbuilder/.firebaserc
+burgerbuilder/firebase.json
+burgerbuilder/.firebase/hosting.YnVpbGQ.cache
