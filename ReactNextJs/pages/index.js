@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Link from 'next/link';
 
-const indexPage = () => {
-    return (
-        <div>
-            <h1>Main Page</h1>
-        </div>
-    )
+class IndexPage extends Component {
+    static async getInitialProps(context) {
+        console.log(context);
+        return {};
+    }
+
+    render(){
+        return (
+            <div>
+                <h1>Main Page</h1>
+                <p>Go to <Link href="/auth">Auth</Link></p>
+            </div>
+        )
+    };
 };
 
-export default indexPage;
+export default IndexPage;
