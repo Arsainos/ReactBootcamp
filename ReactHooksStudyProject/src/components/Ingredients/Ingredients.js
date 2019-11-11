@@ -21,7 +21,7 @@ const ingredientReducer = (currentIngredients, action) => {
 
 const Ingredients = () => {
   const [userIngredients, dispatch] = useReducer(ingredientReducer, []);
-  const { isLoading, error, data, sendRequest, reqExtra, reqIdentifier } = useHttp();
+  const { isLoading, error, data, sendRequest, reqExtra, reqIdentifier, clear } = useHttp();
 
   useEffect(() => {
     if(!isLoading && reqIdentifier === 'REMOVE_INGREDIENT') {
@@ -62,8 +62,8 @@ const Ingredients = () => {
   }, [sendRequest]);
 
   const clearError = useCallback(() => {
-    sendRequest(null,'CLEAR');
-  }, [sendRequest]);
+    clear();
+  }, [clear]);
 
   const ingredientList = useMemo(() => {
     return (
