@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from './store/actions/index';
@@ -6,17 +6,16 @@ import * as actions from './store/actions/index';
 import Layout from './components/Layout/Layout';
 import BurgerBuilder from './containers/BurderBuilder/BurgerBuilder';
 import Logout from './containers/Auth/Logout/Logout';
-import asyncComponent from './hoc/asyncComponent/asyncComponent';
 
-const asyncCheckout = asyncComponent(() => {
+const Checkout = React.lazy(() => {
   return import ('./containers/Checkout/Checkout');
 });
 
-const asyncOrders = asyncComponent(() => {
+const Orders = React.lazy(() => {
   return import ('./containers/Orders/Orders');
 });
 
-const asyncAuth = asyncComponent(() => {
+const Auth = React.lazy(() => {
   return import ('./containers/Auth/Auth');
 });
 
@@ -24,11 +23,11 @@ const app = props => {
   
   useEffect(() => {
     props.onAuthCheckState();
-  }, []);
+  }, [props]);
   
   let routes = (
     <Switch>
-      <Route path="/auth" component={asyncAuth} />
+      <Route path="/auth" render={() => <Auth />} />
       <Route path="/" exact component={BurgerBuilder} />
       <Redirect to="/" />
     </Switch>
@@ -38,9 +37,9 @@ const app = props => {
   {
     routes = (
       <Switch>
-        <Route path="/checkout" component={asyncCheckout} />
-        <Route path="/orders" component={asyncOrders} />
-        <Route path="/auth" component={asyncAuth} />
+        <Route path="/checkout" render={() => <Checkout />} />
+        <Route path="/orders" render={() => <Orders />} />
+        <Route path="/auth" render={() => <Auth />} />
         <Route path="/logout" component={Logout} />
         <Route path="/" exact component={BurgerBuilder} />
       </Switch>
@@ -50,7 +49,7 @@ const app = props => {
   return (
     <div className="App">
       <Layout>
-        {routes}
+        <Suspense fallback={<p>Loading...</p>}>{routes}</Suspense>
       </Layout>
     </div>
   );
