@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from './store/actions/index';
@@ -20,41 +20,40 @@ const asyncAuth = asyncComponent(() => {
   return import ('./containers/Auth/Auth');
 });
 
-class App extends Component {
-  componentDidMount() {
-    this.props.onAuthCheckState();
-  }
+const app = props => {
   
-  render(){
-    let routes = (
+  useEffect(() => {
+    props.onAuthCheckState();
+  }, []);
+  
+  let routes = (
+    <Switch>
+      <Route path="/auth" component={asyncAuth} />
+      <Route path="/" exact component={BurgerBuilder} />
+      <Redirect to="/" />
+    </Switch>
+  );
+
+  if(props.isAuthenticated)
+  {
+    routes = (
       <Switch>
+        <Route path="/checkout" component={asyncCheckout} />
+        <Route path="/orders" component={asyncOrders} />
         <Route path="/auth" component={asyncAuth} />
+        <Route path="/logout" component={Logout} />
         <Route path="/" exact component={BurgerBuilder} />
-        <Redirect to="/" />
       </Switch>
     );
-
-    if(this.props.isAuthenticated)
-    {
-      routes = (
-        <Switch>
-          <Route path="/checkout" component={asyncCheckout} />
-          <Route path="/orders" component={asyncOrders} />
-          <Route path="/auth" component={asyncAuth} />
-          <Route path="/logout" component={Logout} />
-          <Route path="/" exact component={BurgerBuilder} />
-        </Switch>
-      );
-    }
-
-    return (
-      <div className="App">
-        <Layout>
-          {routes}
-        </Layout>
-      </div>
-    );
   }
+
+  return (
+    <div className="App">
+      <Layout>
+        {routes}
+      </Layout>
+    </div>
+  );
 }
 
 const mapStateToProps = state => {
@@ -69,4 +68,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default connect(mapStateToProps,mapDispatchToProps)(app);
